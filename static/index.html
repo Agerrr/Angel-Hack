@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <nav>
+            <div id="logo">Fazer<span class="orange">IO</span></div>
+        </nav>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -20,9 +23,49 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <h1>Paint Here</h1>
+        <div id="container">
+            <aside class="col span_2_of_12">
+                <table id="pallet">
+                    <tr>
+                        <td>Brush1</td>
+                        <td>Brush2</td>
+                    </tr>
+                    <tr>
+                        <td>Brush1</td>
+                        <td>Brush2</td>
+                    </tr>
+                    <tr>
+                        <td>Brush1</td>
+                        <td>Brush2</td>
+                    </tr>
+                    <tr>
+                        <td>Brush1</td>
+                        <td>Brush2</td>
+                    </tr>
+                    <tr>
+                        <td>Brush1</td>
+                        <td>Brush2</td>
+                    </tr>
+                </table>    
+            </aside>
 
-        <canvas id="primary" width="100%" height="100%"></canvas>
+            <section id="draw-container" class="col span_9_of_12">
+                <div id="draw-nav">
+                    <table>
+                        <tr>
+                            <td>Stroke</td>
+                            <td>Color</td>
+                            <td>Size</td>
+                            <td>Intensity</td>
+                            <td>Type</td>
+                        </tr>
+                    </table>
+                </div>
+                <canvas id="primary" height="500px"></canvas>
+            </section>
+        </div>
+
+        
 
         <script src="https://code.createjs.com/easeljs-0.8.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -32,6 +75,11 @@
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
+            $(document).ready(function() {
+                var drawWidth = $('#draw-container').width();
+                $('#primary').css("width", drawWidth);
+                
+            })
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
