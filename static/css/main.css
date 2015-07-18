@@ -95,6 +95,11 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+@font-face {
+    font-family: "Thin"; 
+    src: url('/staic/fonts/thin.otf');
+}
+
 body {
     background-color: #eee;
     -webkit-font-smoothing: antialiased;
@@ -161,6 +166,7 @@ nav {
 /*#7CDEDC;*/
 #logo {
     color: #0094C6;
+    
     font-weight: 100;
     font-size: 30px;
 }
@@ -168,6 +174,7 @@ nav {
 .orange {
     color: #F18805;
     margin-left: 5px;
+    font-family: "Thin";
 }
 
 
