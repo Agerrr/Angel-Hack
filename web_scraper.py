@@ -13,7 +13,10 @@ def findMatchingUrl(links):
 def getConditions(titles):
     newTitles = []
     for title in titles:
-        newTitles.append(title.h3)
+        newTd = title.get('data-title')
+        if(newTd.startswith("Condition to which grade level applies")):
+            newTitles.append(title.h3.string)
+    return newTitles
 
 if __name__ == '__main__':
     html = urllib.urlopen('http://www.mayoclinic.org/search/search-results?q=Thiamine').read()
@@ -26,5 +29,5 @@ if __name__ == '__main__':
     evidenceSoup = BeautifulSoup(evidenceHtml)
     print(evidenceSoup.prettify())
 
-    titles = getConditions(evidenceSoup.find_all(data-title="Condition to which grade level applies"))
-    
+    titles = getConditions(evidenceSoup.find_all('td'))
+    print(titles)
