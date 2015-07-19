@@ -1,5 +1,5 @@
 import pycps
-
+import json
 class CPDatabase(object):
 # Create a connection to a Clusterpoint database.
 	def __init__(self):
@@ -27,10 +27,10 @@ class CPDatabase(object):
 
 	def retrieve(self, id):
 		try:
-		    response = self.con.retrieve(id)
-		    print(id)
-		    print response
-		    return response
+			response = self.con.retrieve(id)
+			if response.get_documents:
+				for id, document in response.get_documents().items():
+					return document
 		except pycps.APIError as e:
 		    print(e)
 		    if e.code == 2824:

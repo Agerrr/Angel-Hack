@@ -64,14 +64,12 @@
         <div id="container">
 
             <aside class="col-xs-2">
-                <table>
-                    <tr><td>Ingredient</td></tr>
-                    <tr><td>Ingredient</td></tr>
-                    <tr><td>Ingredient</td></tr>
-                    <tr><td>Ingredient</td></tr>
+                <table id="ingredients">
                 </table>    
                 <div id="machine-stats">
-
+                    <table>
+                        <tr><td data-ingredient="ingredient-name"></td></tr>
+                    </table>
                 </div>
             </aside>
 
@@ -80,8 +78,10 @@
             </section>
         </div>
 
-
-
+        <script type="text/javascript" src="/static/js/vendor/underscore.js"></script>
+        <script type="text/javascript">
+            var json = {{results|safe}};
+        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
@@ -119,8 +119,20 @@
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             $(document).ready(function() {
+                function genList() {
+                    var conds = _.pluck(json.conditions, 'condition');
+                    var html = "";
+                    conds.forEach(function(c) {
+                        html += "<tr><td>" + c+ "</td></tr>"
+                    });
+                    return html;
+                }
+                var html = genList();
+                $('#ingredients').html(html)
+
                 var drawWidth = $('#draw-container').width();
                 $('#primary').attr("width", drawWidth);
+
             });
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;

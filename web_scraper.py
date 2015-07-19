@@ -22,6 +22,7 @@ class WebScraper(object):
     def scrapDataAboutIngredient(self, ing):
         ingredient = ing.lower()
         html = urllib.urlopen('http://www.mayoclinic.org/search/search-results?q=%s' % ingredient).read()
+        
         soup = BeautifulSoup(html)
         # print(soup.prettify())
 
