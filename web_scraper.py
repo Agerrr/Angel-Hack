@@ -11,11 +11,11 @@ def findMatchingUrl(links):
 
 
 def getConditions(titles):
-    newTitles = []
+    newTitles = {}
     for title in titles:
         newTd = title.get('data-title')
         if(newTd.startswith("Condition to which grade level applies")):
-            newTitles.append(title.h3.string)
+            newTitles[title.h3.string] = title.contents[1]
     return newTitles
 
 if __name__ == '__main__':
