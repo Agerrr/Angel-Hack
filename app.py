@@ -10,8 +10,15 @@ db = CPDatabase()
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-	data = db.retrieve('vitamin-D')	
-	return render_template('index.html', results=json.dumps(data, sort_keys=True, indent=4, encoding="utf-8", separators=(',', ': ')))
+	data1 = db.retrieve('vitamin-D')	
+	data2 = db.retrieve('whey')	
+	data3 = db.retrieve('zinc')	
+
+	return render_template('index.html', 
+		results1=json.dumps(data1, indent=4, encoding="utf-8"), 
+		results2 = json.dumps(data2, indent=4, encoding="utf-8"), 
+		results3 = json.dumps(data3, indent=4, encoding="utf-8") 
+		)
 	# return data
 	# return render_template('index.html',  results = data)
 	

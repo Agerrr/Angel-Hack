@@ -18,7 +18,6 @@
         <script src="/static/js/vendor/modernizr-2.8.3.min.js"></script>
         <nav>
             <div id="logo">apollo IO</div>
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Upload</button>
         </nav>
     </head>
 
@@ -65,12 +64,19 @@
 
             <aside class="col-xs-2">
                 <table id="ingredients">
-                </table>    
-                <div id="machine-stats">
-                    <table>
-                        <tr><td data-ingredient="ingredient-name"></td></tr>
-                    </table>
-                </div>
+                    <tr><td data-ingredient="whey">whey</td></tr>
+                    <tr><td data-ingredient="yellow5">yellow 5</td></tr>
+                    <tr><td data-ingredient="palmoil">palm oil</td></tr>
+                    <tr><td data-ingredient="bht">bht</td></tr>
+                    <tr><td data-ingredient="tocopherol">tocopherol</td></tr>
+                    <tr><td data-ingredient="vitamin-D">vitamin-D</td></tr>
+                    <tr><td data-ingredient="pyridoxine">pyridoxine</td></tr>
+                    <tr><td data-ingredient="monosodium">monosodium</td></tr>
+                    <tr><td data-ingredient="hfcs">hfcs</td></tr>
+                    <tr><td data-ingredient="niacinamide">niacinamide</td></tr>
+                    <tr><td data-ingredient="zinc">zinc</td></tr>
+                </table>
+            
             </aside>
 
             <section id="articles" class="col span_8_of_12">
@@ -80,11 +86,15 @@
 
         <script type="text/javascript" src="/static/js/vendor/underscore.js"></script>
         <script type="text/javascript">
-            var json = {{results|safe}};
+            var json = [];
+            json[0] = {{results1|safe}};
+            json[1] = {{results2|safe}};
+            json[2] = {{results3|safe}};
+
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
         <script src="/static/js/vendor/serialize.min.js"></script>
         <script type="text/javascript">
@@ -119,16 +129,38 @@
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             $(document).ready(function() {
-                function genList() {
-                    var conds = _.pluck(json.conditions, 'condition');
-                    var html = "";
-                    conds.forEach(function(c) {
-                        html += "<tr><td>" + c+ "</td></tr>"
-                    });
-                    return html;
+                var appendArticle = function(el) {
+                        var html = "";
+                        json.forEach(function(obj) {
+
+                            var ingredient = obj.id;
+                            html += "<h1>" + ingredient + "</h1><hr>";
+                            var conditions = obj.conditions;
+                            var isDescription = function (idx) { return idx % 2 == 0; }
+                            var arrr = [];
+                            conditions.forEach(function(something, index) {
+                                console.log(something);
+                                if (isDescription(index)) {
+                                    // here we enter a world of new description
+                                    // but also we start a new item
+                                    
+                                    arrr.push({ 'description' : something.description});
+                                } else {
+                                    // here the object already exists
+                                    var obj = arrr[arrr.length - 1]['condition'] = something.condition;
+                                }
+                            })
+                            console.log(arrr);
+                            arrr.forEach(function(condition_info) {
+                                    html += '<h3>' + condition_info['condition'] + '</h3>'
+                                    html += '<p>' + condition_info['description'] + '</p>';
+                            });
+                            $(el).append(html);
+
+                        });
+                    
                 }
-                var html = genList();
-                $('#ingredients').html(html)
+                appendArticle('#articles');
 
                 var drawWidth = $('#draw-container').width();
                 $('#primary').attr("width", drawWidth);
