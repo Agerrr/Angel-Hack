@@ -1,35 +1,18 @@
-{% extends "/templates/index.html" }
+{% extends "index.html" %}
 
 {% block player %}
 <div class="container">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-5">
+            <h1>HELLO</h1> 
             <audio controls="controls">
               Your browser does not support the <code>audio</code> element.
-              <source src="static/music/{{filename}}.wav" type="audio/wav">
+              <source src="static/music/twinkle_short.wav" type="audio/wav">
             </audio>
         </div>
         <div class="col-md-1"></div>
     </div>
 </div>
-<<<<<<< HEAD
-
-
-<div class="container gradient">
-     
-    <div class="player gradient">
-
-        <a class="button gradient" id="play" href="" title=""></a>
-        <a class="button gradient" id="mute" href="" title=""></a>
-     
-            <input type="range" id="seek" value="0" max=""/>
- 
-        <a class="button gradient" id="close" href="" title=""></a>
-         
-    </div><!-- / player -->
-     
-</div><!-- / Container-->
-=======
 {% endblock %}
->>>>>>> 5d2aababd0ea644ca2bba3eaf0c05ea2ea0346d6
+
