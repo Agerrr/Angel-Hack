@@ -3,13 +3,7 @@ import pycps
 class CPDatabase(object):
 # Create a connection to a Clusterpoint database.
 	def __init__(self):
-		
-		connection_strings = [
-		  'tcp://cloud-us-0.clusterpoint.com:9007',	
-		  'tcp://cloud-us-1.clusterpoint.com:9007',	
-		  'tcp://cloud-us-2.clusterpoint.com:9007',	
-		  'tcp://cloud-us-3.clusterpoint.com:9007'
-		]	
+	
 		DB_NAME = 'apollo'
 		CLIENT_EMAIL = 'jordanlittell@gmail.com'
 		CLIENT_PASSWORD = 'Jwl19912'
