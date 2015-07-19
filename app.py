@@ -13,16 +13,13 @@ def index():
     return render_template('index.html')
 
 
-data = {'niacin': {"id": 1, "formula":"CCO3", "description": "does this even exist??"}}
-db.insert(data)
-db.retrieve(1)
 
 @app.route('/ocr')
 def ocr():
     return render_template('ocr.html')
 
 if __name__ == '__main__':
-    app.run(debug='true')
+    app.run()
 
 
 
