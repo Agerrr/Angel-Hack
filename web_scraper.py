@@ -41,10 +41,11 @@ class WebScraper(object):
         cluster_format = {}
         data_dict = self.scrapDataAboutIngredient(ingredient)
         # data_dict = {u'Skin conditions': u'Niacinamide has been used in skin care products', u'cond': u'value'} 
-        cluster_format[ingredient] = {'conditions': []}
-        for key, value in data_dict.iteritems():
-            cond_descr = {'condition': key, 'description': value}
-            cluster_format[ingredient]['conditions'].append(cond_descr)
+        if data_dict is not None:
+            cluster_format[ingredient] = {'conditions': []}
+            for key, value in data_dict.iteritems():
+                cond_descr = {'condition': key, 'description': value}
+                cluster_format[ingredient]['conditions'].append(cond_descr)
         return cluster_format
 
 
