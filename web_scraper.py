@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 def findMatchingUrl(links, ingredient):
     for link in links:
         newLink = link.get('href')
-        if(newLink.startswith("http://www.mayoclinic.org/drugs-supplements/%s/evidence" % ingredient)):
+        if(newLink.startswith("http://www.mayoclinic.org/drugs-supplements") and ("evidence" in newLink)):
             return newLink
 
 
@@ -24,9 +24,10 @@ if __name__ == '__main__':
     # print(soup.prettify())
 
     evidenceUrl = findMatchingUrl(soup.find_all('a'), ingredient)
+    if (evidenceUrl):
+        evidenceHtml = urllib.urlopen(evidenceUrl).read()
+        evidenceSoup = BeautifulSoup(evidenceHtml)
 
-    evidenceHtml = urllib.urlopen(evidenceUrl).read()
-    evidenceSoup = BeautifulSoup(evidenceHtml)
-
-    titles = getConditions(evidenceSoup.find_all('td'))
-    print(titles)
+        print getConditions(evidenceSoup.find_all('td'))
+    else:
+        print "Didn't find evidence for ingredient: %s" % ingredient
