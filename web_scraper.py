@@ -58,14 +58,13 @@ class WebScraper(object):
             for key, value in data_dict.iteritems():
                 cond_descr = {'condition': key, 'description': value}
                 cluster_format[ingredient]['conditions'].append(cond_descr)
-                cluster_format['sentiment'] = self.get_sentiment(value)
+                cluster_format[ingredient]['sentiment'] = self.get_sentiment(value)
         return cluster_format
 
 
 if __name__ == '__main__':
     web_scraper = WebScraper()
-    web_scraper.get_sentiment("I like cats")
-
+    print(web_scraper.get_sentiment("Different synthetic chemicals that are mainly used for food coloring are strongly associated with cancer.Tests on lab animals showed clear signs of causing cancer, mutations etc"))
     # ingredient = sys.argv[1].lower()
     # html = urllib.urlopen('http://www.mayoclinic.org/search/search-results?q=%s' % ingredient).read()
     # soup = BeautifulSoup(html)

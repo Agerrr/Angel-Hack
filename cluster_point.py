@@ -35,3 +35,11 @@ class CPDatabase(object):
 		    print(e)
 		    if e.code == 2824:
 		        print("Requested non-existing id(s): {0}".format(', '.join(e.document_id)))
+
+		# def update_sentiment(self, ingredient, sentiment)
+		# 	# Update.
+		# 	doc['text'] = 'Changed'
+		# 	try:
+		# 	    con.update({ingredient: doc})
+		# 	except pycps.APIError as e:
+		# 	    print(e)
