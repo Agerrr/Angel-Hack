@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="" ng-app="fazer">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,7 +17,7 @@
             <div id="logo">Fazer<span class="orange">IO</span></div>
         </nav>
     </head>
-    <body>
+    <body ng-controller="FazerCtrl as fazerCtrl">
         <!-- {% block content %}
         {% endblock %} -->
         <!--[if lt IE 8]>
@@ -27,28 +27,9 @@
         <!-- Add your site or application content here -->
         <div id="container">
             <aside class="col span_2_of_12">
-                <table id="pallet">
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                </table>    
+                <div ng-repeat="brush in fazerCtrl.brushes">
+                    <button ng-click="fazerCtrl.selectBrush(brush)">{{ brush.name }}</button>
+                </div>
             </aside>
 
             <section id="draw-container" class="col span_7_of_12">
@@ -63,17 +44,16 @@
                         </tr>
                     </table>
                 </div>
-                <canvas id="primary" height="500px"></canvas>
+                <canvas id="primary" height="500"></canvas>
             </section>
             <aside id="player" class="col span_2_of_12">
                 {% block player %} {% endblock %}
             </aside>
         </div>
 
-        
-
         <script src="https://code.createjs.com/easeljs-0.8.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
         <script src="/static/js/plugins.js"></script>
         <script src="/static/js/main.js"></script>
@@ -82,9 +62,9 @@
         <script>
             $(document).ready(function() {
                 var drawWidth = $('#draw-container').width();
-                $('#primary').css("width", drawWidth);
+                $('#primary').attr("width", drawWidth);
                 
-            })
+            });
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
