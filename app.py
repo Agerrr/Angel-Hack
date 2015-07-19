@@ -28,6 +28,10 @@ def ocr():
     return render_template('ocr.html')
 
 
+@app.route('/sentiment/<text>')
+def sentiment():
+    return render_template('sentiment.html', text=text)
+
 if __name__ == '__main__':
     app.run(debug='true')
 

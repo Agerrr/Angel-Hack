@@ -1,5 +1,7 @@
 import urllib, sys
 from bs4 import BeautifulSoup
+import requests
+import json
 
 class WebScraper(object):
 
@@ -36,6 +38,16 @@ class WebScraper(object):
             return None
 
 
+    def get_sentiment(self, text):
+        payload = {'text': text, 'apikey': 'dd07f61b-3a5c-4d06-94b2-e60c4c191788'}
+        r = requests.post("https://api.idolondemand.com/1/api/sync/analyzesentiment/v1", data=payload)
+        # print(json.loads(json.dumps(r.json(), indent=4)))
+        json1_data = json.loads(r.text)
+        if json1_data is not None:
+            if json1_data['aggregate'] is not None:
+                return json1_data['aggregate']['sentiment']
+        return 'neutral'
+
     # data_dict = {'condition1': 'description1', 'condition2': 'description2'}
     def get_data_in_cluster_format(self, ingredient):
         cluster_format = {}
@@ -46,21 +58,24 @@ class WebScraper(object):
             for key, value in data_dict.iteritems():
                 cond_descr = {'condition': key, 'description': value}
                 cluster_format[ingredient]['conditions'].append(cond_descr)
+                cluster_format['sentiment'] = self.get_sentiment(value)
         return cluster_format
 
 
 if __name__ == '__main__':
+    web_scraper = WebScraper()
+    web_scraper.get_sentiment("I like cats")
 
-    ingredient = sys.argv[1].lower()
-    html = urllib.urlopen('http://www.mayoclinic.org/search/search-results?q=%s' % ingredient).read()
-    soup = BeautifulSoup(html)
-    # print(soup.prettify())
+    # ingredient = sys.argv[1].lower()
+    # html = urllib.urlopen('http://www.mayoclinic.org/search/search-results?q=%s' % ingredient).read()
+    # soup = BeautifulSoup(html)
+    # # print(soup.prettify())
 
-    evidenceUrl = findMatchingUrl(soup.find_all('a'), ingredient)
-    if (evidenceUrl):
-        evidenceHtml = urllib.urlopen(evidenceUrl).read()
-        evidenceSoup = BeautifulSoup(evidenceHtml)
+    # evidenceUrl = findMatchingUrl(soup.find_all('a'), ingredient)
+    # if (evidenceUrl):
+    #     evidenceHtml = urllib.urlopen(evidenceUrl).read()
+    #     evidenceSoup = BeautifulSoup(evidenceHtml)
 
-        conditions = getConditions(evidenceSoup.find_all('td'))
-    else:
-        print "Didn't find evidence for ingredient: %s" % ingredient
+    #     conditions = getConditions(evidenceSoup.find_all('td'))
+    # else:
+    #     print "Didn't find evidence for ingredient: %s" % ingredient
