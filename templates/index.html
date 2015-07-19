@@ -18,7 +18,6 @@
         <script src="/static/js/vendor/modernizr-2.8.3.min.js"></script>
         <nav>
             <div id="logo">apollo IO</div>
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Upload</button>
         </nav>
     </head>
 
@@ -37,7 +36,7 @@
       <div class="modal-body">
 
         <form id="image" method="POST" enctype="multipart/form-data">
-           <input type="file" name="file">
+           <input type="file" id="file" name="file">
            <input type="hidden" name="apikey" value="dd07f61b-3a5c-4d06-94b2-e60c4c191788">
            <input type="submit" value="Submit">
         </form>
@@ -63,28 +62,40 @@
 
         <div id="container">
 
-            <aside class="col-xs-2">
-                <table>
-                    <tr><td>Ingredient</td></tr>
-                    <tr><td>Ingredient</td></tr>
-                    <tr><td>Ingredient</td></tr>
-                    <tr><td>Ingredient</td></tr>
-                </table>    
-                <div id="machine-stats">
-
-                </div>
+            <aside class="col-xs-2" id="ingredients-container">
+                <table id="ingredients">
+                    <tr><th>Ingredients</th></tr>
+                    <tr><td data-ingredient="whey" class="active">whey</td></tr>
+                    <tr><td data-ingredient="yellow5">yellow 5</td></tr>
+                    <tr><td data-ingredient="palmoil">palm oil</td></tr>
+                    <tr><td data-ingredient="bht">bht</td></tr>
+                    <tr><td data-ingredient="tocopherol">tocopherol</td></tr>
+                    <tr><td data-ingredient="vitamin-D" class="active">vitamin-D</td></tr>
+                    <tr><td data-ingredient="pyridoxine">pyridoxine</td></tr>
+                    <tr><td data-ingredient="monosodium">monosodium</td></tr>
+                    <tr><td data-ingredient="hfcs">hfcs</td></tr>
+                    <tr><td data-ingredient="niacinamide">niacinamide</td></tr>
+                    <tr><td data-ingredient="zinc" class="active">zinc</td></tr>
+                </table>
+            
             </aside>
 
-            <section id="articles" class="col span_8_of_12">
+            <section id="articles" class="col span_9_of_12">
                 
             </section>
         </div>
 
+        <script type="text/javascript" src="/static/js/vendor/underscore.js"></script>
+        <script type="text/javascript">
+            var json = [];
+            json[0] = {{results1|safe}};
+            json[1] = {{results2|safe}};
+            json[2] = {{results3|safe}};
 
-
+        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
         <script src="/static/js/vendor/serialize.min.js"></script>
         <script type="text/javascript">
@@ -92,18 +103,25 @@
 
             $('#image').on('submit', function(ev){
                 ev.preventDefault();
-                var formData= $('#image').serialize();
+                var file = document.getElementById('file').files[0]; //Files[0] = 1st file
+                var req;
+                var reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                reader.onload = shipOff;
+                function shipOff(event) {
+                    var result = event.target.result;
+                    var data = {}; 
+                    data['file'] = result; 
+                    data['apikey'] = 'dd07f61b-3a5c-4d06-94b2-e60c4c191788';
+                    data['contentType'] = false;
+                    var fileName = document.getElementById('file').files[0].name; //Should be 'picture.jpg'
+                    data['fileName'] = fileName; 
+                    req = $.post('https://api.idolondemand.com/1/api/sync/ocrdocument/v1', data);
+                }
                 
                 
-                var req = $.ajax({
-                    'url': '/process-image',
-                    'data': formData,
-                    'apikey': "dd07f61b-3a5c-4d06-94b2-e60c4c191788",
-                    'type': 'post'
-                });
-
                 req.done(function(resp) {
-                    debugger;
+                    console.log('done');
                 })
                 
             });
@@ -112,8 +130,42 @@
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             $(document).ready(function() {
+                var appendArticle = function(el) {
+                        var html = "";
+                        json.forEach(function(obj) {
+
+                            var ingredient = obj.id;
+                            html += "<h1>" + ingredient + "</h1><hr>";
+                            var conditions = obj.conditions;
+                            var isDescription = function (idx) { return idx % 2 == 0; }
+                            var arrr = [];
+                            conditions.forEach(function(something, index) {
+                                console.log(something);
+                                if (isDescription(index)) {
+                                    // here we enter a world of new description
+                                    // but also we start a new item
+                                    
+                                    arrr.push({ 'description' : something.description});
+                                } else {
+                                    // here the object already exists
+                                    var obj = arrr[arrr.length - 1]['condition'] = something.condition;
+                                }
+                            })
+                            console.log(arrr);
+                            arrr.forEach(function(condition_info) {
+                                    html += '<h3>' + condition_info['condition'] + '</h3>'
+                                    html += '<p>' + condition_info['description'] + '</p>';
+                            });
+                            $(el).append(html);
+
+                        });
+                    
+                }
+                appendArticle('#articles');
+
                 var drawWidth = $('#draw-container').width();
                 $('#primary').attr("width", drawWidth);
+
             });
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;

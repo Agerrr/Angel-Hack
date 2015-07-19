@@ -104,12 +104,14 @@ body {
     background-color: #eee;
     -webkit-font-smoothing: antialiased;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    overflow: hidden;
 }
 
-aside {   
-    border-radius: 5px; 
+#ingredients-container {   
+    max-height: 100vh;
     padding: 10px;
     background-color: #444;
+    overflow: auto;
 }
 
 #pallet {
@@ -118,6 +120,33 @@ aside {
 #pallet > tbody > tr > td {
     text-align: center; 
     padding: 4px;
+}
+
+#ingredients {
+    color: #efefef;
+    font-size: 18px;
+    height: 100vh; 
+    overflow: scroll;
+}
+
+
+#articles {
+    max-height: 100vh;
+    overflow: auto;
+}
+
+#ingredients td {
+    padding: 10px;
+    transition: 0.4s 'color' linear;
+}
+
+#ingredients td:hover {
+    color: #0094C6;
+    cursor: pointer;
+}
+
+#ingredients td.active {
+    color: #0094C6;
 }
 
 nav {
@@ -134,18 +163,18 @@ nav div {
     background-color: #565656;
     color: #6BBAEC;
     padding: 0 10px;
-    border-radius: 5px; 
 }
 
 #draw-container {
     padding: 15px;
     border: 1px solid rgba(0,0,0,0.7); 
-    border-radius: 5px;
 }
 
 #draw-nav td {
     padding: 10px 15px;
-    text-align: center; 
+    margin: 0;
+    width: 100%; 
+    height: 100%;
     transition: 0.4s color linear;
 }
 
@@ -158,12 +187,12 @@ nav div {
 #draw-nav td:hover {
     cursor: pointer;
     color: #efefef;
+    cursor: pointer;
 }
 
 #container {
     height: 800px;
     width: 100%;
-    margin: 0 5px;
 }
 
 
