@@ -1,72 +1,101 @@
+angular
+    .module("fazer", [])
+    .controller("FazerCtrl", function () {
+        this.brushes = [];
+    });
+
 
 var canvas, stage;
 var drawingCanvas;
-var oldPt;
-var oldMidPt;
-var title;
-var color;
-var stroke;
-var colors;
-var index;
+var drawing;
 
 function init() {
-	canvas = document.getElementById("primary");
-	index = 0;
-	colors = ["#828b20", "#b0ac31", "#cbc53d", "#fad779", "#f9e4ad", "#faf2db", "#563512", "#9b4a0b", "#d36600", "#fe8a00", "#f9a71f"];
+    canvas = document.getElementById("primary");
 
-	//check to see if we are running in a browser with touch support
-	stage = new createjs.Stage(canvas);
-	stage.autoClear = false;
-	stage.enableDOMEvents(true);
+    //check to see if we are running in a browser with touch support
+    stage = new createjs.Stage(canvas);
+    stage.autoClear = false;
+    stage.enableDOMEvents(true);
 
-	createjs.Touch.enable(stage);
-	createjs.Ticker.setFPS(24);
+    createjs.Touch.enable(stage);
+    createjs.Ticker.setFPS(24);
 
-	drawingCanvas = new createjs.Shape();
+    drawingCanvas = new createjs.Shape();
 
-	stage.addEventListener("stagemousedown", handleMouseDown);
-	stage.addEventListener("stagemouseup", handleMouseUp);
+    stage.addEventListener("stagemousedown", handleMouseDown);
+    stage.addEventListener("stagemouseup", handleMouseUp);
+    stage.addEventListener("stagemousemove", handleMouseMove);
 
-	title = new createjs.Text("Click and Drag to draw", "36px Arial", "#777777");
-	title.x = 300;
-	title.y = 200;
-	stage.addChild(title);
-
-	stage.addChild(drawingCanvas);
-	stage.update();
+    stage.addChild(drawingCanvas);
+    stage.update();
 }
 
 function handleMouseDown(event) {
-	if (!event.primary) { return; }
-	if (stage.contains(title)) {
-		stage.clear();
-		stage.removeChild(title);
-	}
-	color = colors[(index++) % colors.length];
-	stroke = Math.random() * 30 + 10 | 0;
-	oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
-	oldMidPt = oldPt.clone();
-	stage.addEventListener("stagemousemove", handleMouseMove);
+    if (!event.primary) {
+        return;
+    }
+    drawing = true;
+
+    lastPoint = {
+        x: stage.mouseX,
+        y: stage.mouseY
+    };
 }
 
+var normalBrush = false;
+var lastPoint = {};
+
 function handleMouseMove(event) {
-	if (!event.primary) { return; }
-	var midPt = new createjs.Point(oldPt.x + stage.mouseX >> 1, oldPt.y + stage.mouseY >> 1);
+    if (!event.primary) {
+        return;
+    }
+    if (!drawing) {
+        return;
+    }
 
-	drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
-
-	oldPt.x = stage.mouseX;
-	oldPt.y = stage.mouseY;
-
-	oldMidPt.x = midPt.x;
-	oldMidPt.y = midPt.y;
-
-	stage.update();
+    var currentPoint = {
+        x: stage.mouseX,
+        y: stage.mouseY
+    };
+    var ctx = drawingCanvas.stage.canvas.getContext('2d');
+    if (normalBrush) {
+        regularBrush(ctx, currentPoint)
+    } else {
+        orange(ctx, currentPoint);
+    }
+    lastPoint = currentPoint;
 }
 
 function handleMouseUp(event) {
-	if (!event.primary) { return; }
-	stage.removeEventListener("stagemousemove", handleMouseMove);
+    if (!event.primary) {
+        return;
+    }
+    drawing = false;
+}
+
+function regularBrush(ctx, currentPoint) {
+    ctx.moveTo(lastPoint.x, lastPoint.y);
+    ctx.lineTo(currentPoint.x, currentPoint.y);
+    ctx.stroke();
+}
+
+function orange(ctx, currentPoint) {
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    ctx.beginPath();
+
+    ctx.moveTo(lastPoint.x - getRandomInt(0, 2), lastPoint.y - getRandomInt(0, 2));
+    ctx.lineTo(currentPoint.x - getRandomInt(0, 2), currentPoint.y - getRandomInt(0, 2));
+    ctx.stroke();
+
+    ctx.moveTo(lastPoint.x, lastPoint.y);
+    ctx.lineTo(currentPoint.x, currentPoint.y);
+    ctx.stroke();
+
+    ctx.moveTo(lastPoint.x + getRandomInt(0, 2), lastPoint.y + getRandomInt(0, 2));
+    ctx.lineTo(currentPoint.x + getRandomInt(0, 2), currentPoint.y + getRandomInt(0, 2));
+    ctx.stroke();
 }
 
 init();
