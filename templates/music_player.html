@@ -1,4 +1,4 @@
-{% extends "/templates/index.html" }
+{% extends "index.html" %}
 
 {% block player %}
 <div class="container">
@@ -7,7 +7,7 @@
         <div class="col-md-5">
             <audio controls="controls">
               Your browser does not support the <code>audio</code> element.
-              <source src="static/music/{{filename}}.wav" type="audio/wav">
+              <source src="/static/music/twinkle_short.wav" type="audio/wav">
             </audio>
         </div>
         <div class="col-md-1"></div>

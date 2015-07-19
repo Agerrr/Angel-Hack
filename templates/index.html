@@ -27,46 +27,36 @@
         <!-- Add your site or application content here -->
         <div id="container">
             <aside class="col span_2_of_12">
-                <table id="pallet">
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                </table>    
+                
             </aside>
 
             <section id="draw-container" class="col span_7_of_12">
                 <div id="draw-nav">
                     <table>
                         <tr>
-                            <td>Stroke</td>
-                            <td>Color</td>
-                            <td>Size</td>
-                            <td>Intensity</td>
-                            <td>Type</td>
+                            <td>list item</td>
+                            <td>list item</td>
+                            <td>list item</td>
+                            <td>list item</td>
+                            <td>list item</td>
                         </tr>
                     </table>
                 </div>
                 <canvas id="primary" height="500px"></canvas>
             </section>
             <aside id="player" class="col span_2_of_12">
-                {% block player %} {% endblock %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <audio controls="controls">
+                              Your browser does not support the <code>audio</code> element.
+                              <source src="static/music/twinkle_short.wav" type="audio/wav">
+                            </audio>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
             </aside>
         </div>
 
@@ -82,9 +72,8 @@
         <script>
             $(document).ready(function() {
                 var drawWidth = $('#draw-container').width();
-                $('#primary').css("width", drawWidth);
-                
-            })
+                $('#primary').attr("width", drawWidth);
+            });
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
