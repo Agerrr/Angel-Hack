@@ -27,27 +27,42 @@
         <!-- Add your site or application content here -->
         <div id="container">
             <aside class="col span_2_of_12">
+<<<<<<< HEAD
+                
+=======
                 <div ng-repeat="brush in fazerCtrl.brushes">
                     <button ng-click="fazerCtrl.selectBrush(brush)">{{ brush.name }}</button>
                 </div>
+>>>>>>> 05d03e991c4edb8bca6b55b73eb18b613862d820
             </aside>
 
             <section id="draw-container" class="col span_7_of_12">
                 <div id="draw-nav">
                     <table>
                         <tr>
-                            <td>Stroke</td>
-                            <td>Color</td>
-                            <td>Size</td>
-                            <td>Intensity</td>
-                            <td>Type</td>
+                            <td>list item</td>
+                            <td>list item</td>
+                            <td>list item</td>
+                            <td>list item</td>
+                            <td>list item</td>
                         </tr>
                     </table>
                 </div>
                 <canvas id="primary" height="500"></canvas>
             </section>
             <aside id="player" class="col span_2_of_12">
-                {% block player %} {% endblock %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <audio controls="controls">
+                              Your browser does not support the <code>audio</code> element.
+                              <source src="static/music/twinkle_short.wav" type="audio/wav">
+                            </audio>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
             </aside>
         </div>
 
@@ -63,7 +78,10 @@
             $(document).ready(function() {
                 var drawWidth = $('#draw-container').width();
                 $('#primary').attr("width", drawWidth);
+<<<<<<< HEAD
+=======
                 
+>>>>>>> 05d03e991c4edb8bca6b55b73eb18b613862d820
             });
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
