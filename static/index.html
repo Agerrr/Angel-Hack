@@ -25,28 +25,9 @@
         <!-- Add your site or application content here -->
         <div id="container">
             <aside class="col span_2_of_12">
-                <table id="pallet">
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                    <tr>
-                        <td>Brush1</td>
-                        <td>Brush2</td>
-                    </tr>
-                </table>    
+                <div ng-repeat="brush in fazerCtrl.brushes">
+                    <button ng-click="fazerCtrl.selectBrush(brush)">{{ brush.name }}</button>
+                </div>
             </aside>
 
             <section id="draw-container" class="col span_9_of_12">
