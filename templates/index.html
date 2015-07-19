@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="" ng-app="fazer">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,7 +17,7 @@
             <div id="logo">Fazer<span class="orange">IO</span></div>
         </nav>
     </head>
-    <body>
+    <body ng-controller="FazerCtrl as fazerCtrl">
         <!-- {% block content %}
         {% endblock %} -->
         <!--[if lt IE 8]>
@@ -27,7 +27,13 @@
         <!-- Add your site or application content here -->
         <div id="container">
             <aside class="col span_2_of_12">
+<<<<<<< HEAD
                 
+=======
+                <div ng-repeat="brush in fazerCtrl.brushes">
+                    <button ng-click="fazerCtrl.selectBrush(brush)">{{ brush.name }}</button>
+                </div>
+>>>>>>> 05d03e991c4edb8bca6b55b73eb18b613862d820
             </aside>
 
             <section id="draw-container" class="col span_7_of_12">
@@ -42,7 +48,7 @@
                         </tr>
                     </table>
                 </div>
-                <canvas id="primary" height="500px"></canvas>
+                <canvas id="primary" height="500"></canvas>
             </section>
             <aside id="player" class="col span_2_of_12">
                 <div class="container">
@@ -60,10 +66,9 @@
             </aside>
         </div>
 
-        
-
         <script src="https://code.createjs.com/easeljs-0.8.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
         <script src="/static/js/plugins.js"></script>
         <script src="/static/js/main.js"></script>
@@ -73,6 +78,10 @@
             $(document).ready(function() {
                 var drawWidth = $('#draw-container').width();
                 $('#primary').attr("width", drawWidth);
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 05d03e991c4edb8bca6b55b73eb18b613862d820
             });
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
