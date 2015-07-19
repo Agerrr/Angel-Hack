@@ -5,7 +5,7 @@ if __name__ == '__main__':
     cp_db = CPDatabase()
     webscraper = WebScraper()
 
-    ingredients = ["pyridoxine", "vitamin-D", "tocopherol", "zinc"]
+    ingredients = ["niacin", "salt", "sugar", "colors", "glucose","water","riboflavin","glycerin","fructose","gelatin","iron","niacinamide","spice","maltodextrin","molasses","semolina","cornstarch","caffeine","pectine","sucralose","carmine","palmoil","shortening","monosodium","cornsyrup","whey","corn","lactose","yellow5", "dextrose","yellow6","vitamin-B","soybean","bht","blue1","xanthangum"]
     for ingredient in ingredients:
         data = webscraper.get_data_in_cluster_format(ingredient)
         cp_db.insert(data)
