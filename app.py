@@ -23,6 +23,18 @@ def index():
 	# return render_template('index.html',  results = data)
 	
 
+@app.route('/fetch_ingredients', methods=['POST', 'GET'])
+def fetch_ingredients():
+	ids = request.form
+	print ids
+	results = []
+	#iterate through ids and retrieve text from clusterDB
+	for cluster_key in ids: 
+		results.append(db.retrieve(cluster_key))
+
+	print results 
+	return json.dumps(results)
+
 @app.route('/ocr')
 def ocr():
     return render_template('ocr.html')
