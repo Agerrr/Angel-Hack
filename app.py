@@ -1,26 +1,29 @@
+
 from flask import Flask, jsonify
-from flask import render_template
+from flask import render_template, redirect
+from cluster_point import CPDatabase
+
 
 app = Flask(__name__)
-
+db = CPDatabase()
 
 @app.route('/')
+
 def index():
-    return 'Flask is running!'
+    return render_template('index.html')
 
 
-@app.route('/data')
-def names():
-    data = {
-        "first_names": ["John", "Jacob", "Julie", "Jennifer"],
-        "last_names": ["Connor", "Johnson", "Cloud", "Ray"]
-    }
-    return jsonify(data)
+data = {'niacin': {"id": 1, "formula":"CCO3", "description": "does this even exist??"}}
+db.insert(data)
+db.retrieve(1)
 
-
-@app.route('/<filename>')
-def music_player(filename):
-    return render_template('music_player.html', filename=filename)
+@app.route('/ocr')
+def ocr():
+    return render_template('ocr.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug='true')
+
+
+
+ 
