@@ -123,7 +123,11 @@ aside {
 nav {
     width: 100%;
     background-color: #121212;
-    padding: 0 10px;
+    padding: 0 40px;
+}
+
+nav div {
+    display: inline-block;
 }
 
 #draw-nav {
@@ -166,7 +170,6 @@ nav {
 /*#7CDEDC;*/
 #logo {
     color: #0094C6;
-    
     font-weight: 100;
     font-size: 30px;
 }
