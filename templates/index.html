@@ -37,7 +37,7 @@
       <div class="modal-body">
 
         <form id="image" method="POST" enctype="multipart/form-data">
-           <input type="file" name="file">
+           <input type="file" id="file" name="file">
            <input type="hidden" name="apikey" value="dd07f61b-3a5c-4d06-94b2-e60c4c191788">
            <input type="submit" value="Submit">
         </form>
@@ -92,18 +92,25 @@
 
             $('#image').on('submit', function(ev){
                 ev.preventDefault();
-                var formData= $('#image').serialize();
+                var file = document.getElementById('file').files[0]; //Files[0] = 1st file
+                var req;
+                var reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                reader.onload = shipOff;
+                function shipOff(event) {
+                    var result = event.target.result;
+                    var data = {}; 
+                    data['file'] = result; 
+                    data['apikey'] = 'dd07f61b-3a5c-4d06-94b2-e60c4c191788';
+                    data['contentType'] = false;
+                    var fileName = document.getElementById('file').files[0].name; //Should be 'picture.jpg'
+                    data['fileName'] = fileName; 
+                    req = $.post('https://api.idolondemand.com/1/api/sync/ocrdocument/v1', data);
+                }
                 
                 
-                var req = $.ajax({
-                    'url': '/process-image',
-                    'data': formData,
-                    'apikey': "dd07f61b-3a5c-4d06-94b2-e60c4c191788",
-                    'type': 'post'
-                });
-
                 req.done(function(resp) {
-                    debugger;
+                    console.log('done');
                 })
                 
             });
