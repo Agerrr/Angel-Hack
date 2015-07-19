@@ -1,18 +1,12 @@
 import pycps
-
+import json
 class CPDatabase(object):
 # Create a connection to a Clusterpoint database.
 	def __init__(self):
-		
-		connection_strings = [
-		  'tcp://cloud-us-0.clusterpoint.com:9007',	
-		  'tcp://cloud-us-1.clusterpoint.com:9007',	
-		  'tcp://cloud-us-2.clusterpoint.com:9007',	
-		  'tcp://cloud-us-3.clusterpoint.com:9007'
-		]	
+	
 		DB_NAME = 'apollo'
 		CLIENT_EMAIL = 'jordanlittell@gmail.com'
-		CLIENT_PASSWORD = 'Jwl19912'
+		CLIENT_PASSWORD = 'upxf3250lsr'
 		ACCOUNT_ID = '100908'
 
 		self.con = pycps.Connection('tcp://cloud-us-0.clusterpoint.com:9007', DB_NAME, CLIENT_EMAIL, CLIENT_PASSWORD, ACCOUNT_ID)
@@ -33,10 +27,10 @@ class CPDatabase(object):
 
 	def retrieve(self, id):
 		try:
-		    response = self.con.retrieve(id)
-		    print(id)
-		    print response
-		    return response
+			response = self.con.retrieve(id)
+			if response.get_documents:
+				for id, document in response.get_documents().items():
+					return document
 		except pycps.APIError as e:
 		    print(e)
 		    if e.code == 2824:

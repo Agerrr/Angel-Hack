@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 var canvas, stage;
 var drawingCanvas;
 var oldPt;
@@ -139,9 +137,25 @@ song.addEventListener('timeupdate',function (){
 
 init();
 
+
+
 angular
     .module("fazer", [])
-    .controller("FazerCtrl", function () {
+    .controller('NavCtrl', function ($http) {
+      var key = "dd07f61b-3a5c-4d06-94b2-e60c4c191788";
+      var url = "https://api.idolondemand.com/1/api/sync/ocrdocument/v1";
+        $scope.data = 'none';
+        $scope.add = function() {
+          var f = document.getElementById('image').files[0],
+              r = new FileReader();
+          r.onloadend = function(e){
+            $scope.data = e.target.result;
+          }
+          r.readAsBinaryString(f);
+      }
+
+    })
+    .controller("ApolloCtrl", function () {
         var canvas;
         var context;
         var stage;
