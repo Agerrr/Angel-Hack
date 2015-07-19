@@ -6,7 +6,7 @@ class CPDatabase(object):
 	
 		DB_NAME = 'apollo'
 		CLIENT_EMAIL = 'jordanlittell@gmail.com'
-		CLIENT_PASSWORD = 'Jwl19912'
+		CLIENT_PASSWORD = 'upxf3250lsr'
 		ACCOUNT_ID = '100908'
 
 		self.con = pycps.Connection('tcp://cloud-us-0.clusterpoint.com:9007', DB_NAME, CLIENT_EMAIL, CLIENT_PASSWORD, ACCOUNT_ID)
